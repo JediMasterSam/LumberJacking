@@ -1,4 +1,4 @@
-﻿namespace LumberJacking.Level
+﻿namespace LumberJacking.World
 {
     public enum CellType
     {
