@@ -72,7 +72,7 @@ namespace LumberJacking.GameObject
             // basicEffect.World = Matrix.CreateRotationZ(MathHelper.PiOver4) * Matrix.CreateTranslation(0.5f, 0, 0); // for sake of example
             basicEffect.World = Matrix.Identity; // Use this to leave your model at the origin
             // Transform the entire world around (effectively: place the camera)
-            basicEffect.View = Matrix.CreateLookAt(LumberJackingGame.Instance.Camera.Transform.Position, LumberJackingGame.Instance.Camera.Transform.Position + Vector3.Backward, Vector3.Up);
+            basicEffect.View = LumberJackingGame.Instance.Camera.View;
             // Specify how 3D points are projected/transformed onto the 2D screen
             basicEffect.Projection = LumberJackingGame.Instance.Camera.Projection;
 
