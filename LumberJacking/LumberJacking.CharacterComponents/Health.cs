@@ -33,7 +33,7 @@ namespace LumberJacking.GameObject
 
         public void UpdateComponent(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 }
