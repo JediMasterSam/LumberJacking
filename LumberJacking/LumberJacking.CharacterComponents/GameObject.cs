@@ -1,4 +1,5 @@
-﻿using LumberJacking.GameObject.Interfaces;
+﻿using LumberJacking.GameObject.Components;
+using LumberJacking.GameObject.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
