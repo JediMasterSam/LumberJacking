@@ -10,13 +10,36 @@ namespace LumberJacking.GameObject
 {
     public class GameObject : GameComponent
     {
-        public GameObject(Game game, params IComponent[] components) : base(game)
+        public GameObject(Game game) : base(game)
         {
-            Components = components;
+            Components = new Dictionary<Type, IComponent>
+            {
+                { typeof(Transform), new Transform() }
+            };
         }
 
-        public Transform Transform { get; }
+        public Transform Transform { get => GetComponent<Transform>(); }
 
-        private IComponent[] Components { get; }
+        private Dictionary<Type, IComponent> Components { get; }
+
+        public T GetComponent<T>()
+        {
+            return (T)Components[typeof(T)];
+        }
+
+        public void AddComponent<T>(T component) where T : IComponent
+        {
+            Components.Add(typeof(T), component);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            foreach(var component in Components)
+            {
+                component.Value.UpdateComponent(gameTime);
+            }
+
+            base.Update(gameTime);
+        }
     }
 }

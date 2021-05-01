@@ -1,4 +1,5 @@
 ﻿using LumberJacking.GameObject.Interfaces;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace LumberJacking.GameObject
@@ -26,6 +27,11 @@ namespace LumberJacking.GameObject
         }
 
         public void UpdateComponent()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateComponent(GameTime gameTime)
         {
             throw new NotImplementedException();
         }
