@@ -43,7 +43,8 @@ namespace LumberJacking
         {
             Camera = new Camera(0.78f);
             var spawn = Level.Markers.First(marker => marker.CellType == CellType.Spawn).Position;
-            Camera.Transform.Position = new Vector3(spawn.X, 1f, spawn.Y);
+            Camera.Transform.Position = new Vector3(0, 0, -3);
+            Camera.Transform.Rotation = 180;
             
             foreach(var line in Level.Walls)
             {
@@ -65,7 +66,10 @@ namespace LumberJacking
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            foreach(var gameObject in GameObjects)
+            {
+                gameObject.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
