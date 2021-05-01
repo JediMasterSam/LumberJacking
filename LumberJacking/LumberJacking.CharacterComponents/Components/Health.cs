@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 
-namespace LumberJacking.GameObject
+namespace LumberJacking.GameObject.Components
 {
     public class Health : IComponent
     {

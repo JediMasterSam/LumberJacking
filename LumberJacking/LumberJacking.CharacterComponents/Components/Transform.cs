@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LumberJacking.GameObject
+namespace LumberJacking.GameObject.Components
 {
     public class Transform : IComponent
     {
