@@ -171,7 +171,7 @@ namespace LumberJacking.World
                 triplet[1] = triplet[2];
                 triplet[2] = index;
 
-                if (triplet[0] == triplet[1] && triplet[1] == triplet[2])
+                if (triplet[1] == triplet[2])
                 {
                     corners[^1] = current;
                 }

@@ -74,8 +74,7 @@ namespace LumberJacking.GameObject
             // Transform the entire world around (effectively: place the camera)
             basicEffect.View = Matrix.CreateLookAt(LumberJackingGame.Instance.Camera.Transform.Position, LumberJackingGame.Instance.Camera.Transform.Position + Vector3.Backward, Vector3.Up);
             // Specify how 3D points are projected/transformed onto the 2D screen
-            basicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45),
-                (float) GraphicsDevice.Viewport.Width / (float) GraphicsDevice.Viewport.Height, 1.0f, 100.0f);
+            basicEffect.Projection = LumberJackingGame.Instance.Camera.Projection;
 
             // Tell BasicEffect to make use of your vertex colors
             basicEffect.VertexColorEnabled = false;
@@ -91,30 +90,6 @@ namespace LumberJacking.GameObject
             {
                 // This is the all-important line that sets the effect, and all of its settings, on the graphics device
                 pass.Apply();
-
-                var foobar = new VertexPositionColor[]
-                {
-                    new()
-                    {
-                        Color = Color.Red,
-                        Position = new Vector3(-0.5f, -0.5f, 0f)
-                    },
-                    new()
-                    {
-                        Color = Color.Green,
-                        Position = new Vector3(-0.5f, 0.5f, 0f)
-                    },
-                    new()
-                    {
-                        Color = Color.Yellow,
-                        Position = new Vector3(0.5f, -0.5f, 0f)
-                    },
-                    new()
-                    {
-                        Color = Color.White,
-                        Position = new Vector3(0.5f, 0.5f, 0f)
-                    }
-                };
                 // var vertexBuffer = new VertexBuffer(GraphicsDevice, new VertexDeclaration(new []{new VertexElement()}))
                 // GraphicsDevice.SetVertexBuffer();
                 GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, MeshRenderer.Verticies, 0, 4, MeshRenderer.TriangleIndices, 0, 2);
