@@ -74,7 +74,10 @@ namespace LumberJacking
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            foreach (var gameObject in GameObjects)
+            {
+                gameObject.Draw(gameTime);
+            }
 
             base.Draw(gameTime);
         }

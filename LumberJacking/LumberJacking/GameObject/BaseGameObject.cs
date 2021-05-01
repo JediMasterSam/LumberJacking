@@ -59,22 +59,6 @@ namespace LumberJacking.GameObject
         {
             if (!Drawable) return;
 
-            VertexBuffer vertexBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), 8, BufferUsage.None);
-
-            vertexBuffer.SetData(MeshRenderer.Verticies);
-
-            IndexBuffer triangleIndexBuffer = new IndexBuffer(
-                GraphicsDevice,
-                IndexElementSize.SixteenBits,
-                sizeof(short) * MeshRenderer.TriangleIndices.Length,
-                BufferUsage.None);
-
-            triangleIndexBuffer.SetData(MeshRenderer.TriangleIndices);
-
-            GraphicsDevice.Indices = triangleIndexBuffer;
-            GraphicsDevice.SetVertexBuffer(vertexBuffer);
-            GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, MeshRenderer.TriangleIndices.Length / 3);
-
             ////////////////////////////////////////////////////////
 
             var basicEffect = MeshRenderer.Effect;
@@ -85,13 +69,12 @@ namespace LumberJacking.GameObject
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 
             // Transform your model to place it somewhere in the world
-            basicEffect.World = Matrix.CreateRotationZ(MathHelper.PiOver4) * Matrix.CreateTranslation(0.5f, 0, 0); // for sake of example
+            basicEffect.World = Matrix.Identity; //Matrix.CreateRotationZ(MathHelper.PiOver4) * Matrix.CreateTranslation(0.5f, 0, 0); // for sake of example
                                                                                                                    //basicEffect.World = Matrix.Identity; // Use this to leave your model at the origin
                                                                                                                    // Transform the entire world around (effectively: place the camera)
-            basicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, -3), Vector3.Zero, Vector3.Up);
+            basicEffect.View = LumberJackingGame.Instance.Camera.View;
             // Specify how 3D points are projected/transformed onto the 2D screen
-            basicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45),
-                    (float)GraphicsDevice.Viewport.Width / (float)GraphicsDevice.Viewport.Height, 1.0f, 100.0f);
+            basicEffect.Projection = LumberJackingGame.Instance.Camera.Projection;
 
             // Tell BasicEffect to make use of your vertex colors
             basicEffect.VertexColorEnabled = true;
@@ -106,7 +89,24 @@ namespace LumberJacking.GameObject
                 // This is the all-important line that sets the effect, and all of its settings, on the graphics device
                 pass.Apply();
 
-                // Here's your code:
+                // Here's our code:
+                //VertexBuffer vertexBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), MeshRenderer.Verticies.Length, BufferUsage.None);
+
+                //vertexBuffer.SetData(MeshRenderer.Verticies);
+
+                //IndexBuffer triangleIndexBuffer = new IndexBuffer(
+                //    GraphicsDevice,
+                //    IndexElementSize.SixteenBits,
+                //    sizeof(short) * MeshRenderer.TriangleIndices.Length,
+                //    BufferUsage.None);
+
+                //triangleIndexBuffer.SetData(MeshRenderer.TriangleIndices);
+
+                //GraphicsDevice.Indices = triangleIndexBuffer;
+                //GraphicsDevice.SetVertexBuffer(vertexBuffer);
+                //GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, MeshRenderer.TriangleIndices.Length / 3);
+
+                // Here's the example code
                 VertexPositionColor[] vertices = new VertexPositionColor[3];
                 vertices[0].Position = new Vector3(-0.5f, -0.5f, 0f);
                 vertices[0].Color = Color.Red;
