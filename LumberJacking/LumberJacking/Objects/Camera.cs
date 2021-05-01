@@ -1,4 +1,6 @@
 ﻿using LumberJacking.GameObject;
+using LumberJacking.GameObject.Components;
+using LumberJacking.Geometry;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,10 @@ namespace LumberJacking.Objects
 
         public Camera(float fieldOfView, float nearClipPlane = 1f, float farClipPlane = 500f) : base(LumberJackingGame.Instance)
         {
+            var physics = AddComponent<BasicPhysics>(this);
+            physics.GameObject = this;
+            physics.Circle = new Circle(new Vector2(Transform.Position.X, Transform.Position.Z), 1f);
+
             Drawable = false;
 
             FieldOfView = fieldOfView;

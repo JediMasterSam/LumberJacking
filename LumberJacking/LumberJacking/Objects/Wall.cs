@@ -22,10 +22,10 @@ namespace LumberJacking.Objects
 
             var vertices = new VertexPositionTexture[]
             {
-                new VertexPositionTexture(new Vector3(line.Start.X, 0f, line.Start.Y), new Vector2(0, 1)),
+                new VertexPositionTexture(new Vector3(line.Start.X, 0f, line.Start.Y), new Vector2(0, height)),
                 new VertexPositionTexture(new Vector3(line.Start.X, height, line.Start.Y), new Vector2(0, 0)),
                 new VertexPositionTexture(new Vector3(line.End.X, height, line.End.Y), new Vector2(length, 0)),
-                new VertexPositionTexture(new Vector3(line.End.X, 0f, line.End.Y), new Vector2(length, 1)),
+                new VertexPositionTexture(new Vector3(line.End.X, 0f, line.End.Y), new Vector2(length, height)),
             };
 
             var triangleIndices = new short[]

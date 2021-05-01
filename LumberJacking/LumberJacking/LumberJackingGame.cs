@@ -51,6 +51,8 @@ namespace LumberJacking
             _graphics.PreferredBackBufferHeight = 900;
             _graphics.ApplyChanges();
 
+            Camera = new Camera(0.4f);
+
             var spawn = Level.Markers.First(marker => marker.CellType == CellType.Spawn).Position;
             Camera.Transform.Position = new Vector3(spawn.X, 0.5f, spawn.Y);
             Camera.Transform.Rotation = 0;
@@ -91,7 +93,7 @@ namespace LumberJacking
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color(12829635));
 
             foreach (var gameObject in GameObjects)
             {
