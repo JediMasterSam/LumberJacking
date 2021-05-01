@@ -17,7 +17,8 @@ namespace LumberJacking.GameObject.Components
         }
 
         public BasicEffect Effect { get; set; }
-        public VertexPositionColor[] Verticies { get; set; }
+        public Texture2D Texture { get; set; }
+        public VertexPositionTexture[] Verticies { get; set; }
         public short[] TriangleIndices { get; set; }
 
         public override void UpdateComponent(GameTime gameTime)

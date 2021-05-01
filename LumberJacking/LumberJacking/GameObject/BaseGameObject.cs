@@ -70,15 +70,17 @@ namespace LumberJacking.GameObject
 
             // Transform your model to place it somewhere in the world
             // basicEffect.World = Matrix.CreateRotationZ(MathHelper.PiOver4) * Matrix.CreateTranslation(0.5f, 0, 0); // for sake of example
-            //basicEffect.World = Matrix.Identity; // Use this to leave your model at the origin
+            basicEffect.World = Matrix.Identity; // Use this to leave your model at the origin
             // Transform the entire world around (effectively: place the camera)
-            basicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, -3), Vector3.Zero, Vector3.Up);
+            basicEffect.View = Matrix.CreateLookAt(LumberJackingGame.Instance.Camera.Transform.Position, LumberJackingGame.Instance.Camera.Transform.Position + Vector3.Backward, Vector3.Up);
             // Specify how 3D points are projected/transformed onto the 2D screen
             basicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45),
                 (float) GraphicsDevice.Viewport.Width / (float) GraphicsDevice.Viewport.Height, 1.0f, 100.0f);
 
             // Tell BasicEffect to make use of your vertex colors
-            basicEffect.VertexColorEnabled = true;
+            basicEffect.VertexColorEnabled = false;
+            basicEffect.Texture = MeshRenderer.Texture;
+            basicEffect.TextureEnabled = true;
             // I'm setting this so that *both* sides of your triangle are drawn
             // (so it won't be back-face culled if you move it, or the camera around behind it)
             GraphicsDevice.RasterizerState = RasterizerState.CullNone;
@@ -115,7 +117,7 @@ namespace LumberJacking.GameObject
                 };
                 // var vertexBuffer = new VertexBuffer(GraphicsDevice, new VertexDeclaration(new []{new VertexElement()}))
                 // GraphicsDevice.SetVertexBuffer();
-                GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, foobar, 0, 4, new[] {0, 1, 2, 2, 3, 1}, 0, 2);
+                GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, MeshRenderer.Verticies, 0, 4, MeshRenderer.TriangleIndices, 0, 2);
                 // Here's your code:
                 // VertexPositionColor[] vertices = new VertexPositionColor[3];
                 // vertices[0].Position = new Vector3(-0.5f, -0.5f, 0f);
