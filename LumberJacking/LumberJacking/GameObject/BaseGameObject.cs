@@ -89,22 +89,32 @@ namespace LumberJacking.GameObject
                 // This is the all-important line that sets the effect, and all of its settings, on the graphics device
                 pass.Apply();
 
-                // Here's your code:
-                VertexBuffer vertexBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), MeshRenderer.Verticies.Length, BufferUsage.None);
+                // Here's our code:
+                //VertexBuffer vertexBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), MeshRenderer.Verticies.Length, BufferUsage.None);
 
-                vertexBuffer.SetData(MeshRenderer.Verticies);
+                //vertexBuffer.SetData(MeshRenderer.Verticies);
 
-                IndexBuffer triangleIndexBuffer = new IndexBuffer(
-                    GraphicsDevice,
-                    IndexElementSize.SixteenBits,
-                    sizeof(short) * MeshRenderer.TriangleIndices.Length,
-                    BufferUsage.None);
+                //IndexBuffer triangleIndexBuffer = new IndexBuffer(
+                //    GraphicsDevice,
+                //    IndexElementSize.SixteenBits,
+                //    sizeof(short) * MeshRenderer.TriangleIndices.Length,
+                //    BufferUsage.None);
 
-                triangleIndexBuffer.SetData(MeshRenderer.TriangleIndices);
+                //triangleIndexBuffer.SetData(MeshRenderer.TriangleIndices);
 
-                GraphicsDevice.Indices = triangleIndexBuffer;
-                GraphicsDevice.SetVertexBuffer(vertexBuffer);
-                GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, MeshRenderer.TriangleIndices.Length / 3);
+                //GraphicsDevice.Indices = triangleIndexBuffer;
+                //GraphicsDevice.SetVertexBuffer(vertexBuffer);
+                //GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, MeshRenderer.TriangleIndices.Length / 3);
+
+                // Here's the example code
+                VertexPositionColor[] vertices = new VertexPositionColor[3];
+                vertices[0].Position = new Vector3(-0.5f, -0.5f, 0f);
+                vertices[0].Color = Color.Red;
+                vertices[1].Position = new Vector3(0, 0.5f, 0f);
+                vertices[1].Color = Color.Green;
+                vertices[2].Position = new Vector3(0.5f, -0.5f, 0f);
+                vertices[2].Color = Color.Yellow;
+                GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.TriangleList, vertices, 0, 1);
             }
 
             ////////////////////////////////////////////////////////
