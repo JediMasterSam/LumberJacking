@@ -71,7 +71,7 @@ namespace LumberJacking
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var WallTexture = Content.Load<Texture2D>("wall_texture");
+            WallTexture = Content.Load<Texture2D>("wall_texture");
 
             // TODO: use this.Content to load your game content here
         }

@@ -11,6 +11,8 @@ namespace LumberJacking.Input
         Left = 4,
         Right = 8,
         Run = 16,
-        Attack = 32
+        Attack = 32,
+        RotateLeft = 64,
+        RotateRight = 128
     }
 }

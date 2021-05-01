@@ -38,10 +38,21 @@ namespace LumberJacking.Objects
 
         public override void Update(GameTime gameTime)
         {
-            if (LumberJackingGame.Instance.Input.IsActive(Input.PlayerAction.Forward)) Transform.Position += Vector3.Backward * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (LumberJackingGame.Instance.Input.IsActive(Input.PlayerAction.Backward)) Transform.Position += Vector3.Forward * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (LumberJackingGame.Instance.Input.IsActive(Input.PlayerAction.Left)) Transform.Position += Vector3.Right * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (LumberJackingGame.Instance.Input.IsActive(Input.PlayerAction.Right)) Transform.Position += Vector3.Left * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            var gameInstance = LumberJackingGame.Instance;
+
+            if (gameInstance.Input.IsActive(Input.PlayerAction.RotateLeft)) Transform.Rotation -= (float)gameTime.ElapsedGameTime.TotalSeconds * 0.025f;
+            if (gameInstance.Input.IsActive(Input.PlayerAction.RotateRight)) Transform.Rotation += (float)gameTime.ElapsedGameTime.TotalSeconds * 0.025f;
+
+            var localForward = GetLookAtVector();
+            localForward.Normalize();
+
+            var localRight = new Vector3(localForward.Z, 0, localForward.X);
+            var localLeft = new Vector3(-localForward.Z, 0, -localForward.X);
+
+            if (gameInstance.Input.IsActive(Input.PlayerAction.Forward)) Transform.Position += localForward * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (gameInstance.Input.IsActive(Input.PlayerAction.Backward)) Transform.Position += -localForward * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (gameInstance.Input.IsActive(Input.PlayerAction.Left)) Transform.Position += localRight * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (gameInstance.Input.IsActive(Input.PlayerAction.Right)) Transform.Position += localLeft * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             View = Matrix.CreateLookAt(Transform.Position, Transform.Position + GetLookAtVector(), Vector3.Up);
             Projection = Matrix.CreatePerspectiveFieldOfView(FieldOfView, AspectRatio, NearClipPlane, FarClipPlane);
@@ -52,7 +63,7 @@ namespace LumberJacking.Objects
         private Vector3 GetLookAtVector()
         {
             var angle = Transform.Rotation;
-            return new Vector3(MathF.Cos(MathF.Cos(angle * DegToRad)), Transform.Position.Y, MathF.Sin(angle * DegToRad));
+            return new Vector3(MathF.Cos(angle * DegToRad), 0, MathF.Sin(angle * DegToRad));
         }
     }
 }

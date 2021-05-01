@@ -13,6 +13,8 @@ namespace LumberJacking.Input
                 {Keys.S, PlayerAction.Backward},
                 {Keys.A, PlayerAction.Left},
                 {Keys.D, PlayerAction.Right},
+                {Keys.Left, PlayerAction.RotateLeft},
+                {Keys.Right, PlayerAction.RotateRight},
                 {Keys.LeftShift, PlayerAction.Run},
                 {Keys.Space, PlayerAction.Attack}
             };
