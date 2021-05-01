@@ -1,5 +1,4 @@
 ﻿using System;
-using LumberJacking.World;
 
 namespace LumberJacking
 {
@@ -8,9 +7,8 @@ namespace LumberJacking
         [STAThread]
         static void Main()
         {
-            Level.PrintPath(1);
-            // using (var game = new Game1())
-            //     game.Run();
+            using (var game = new Game1())
+                game.Run();
         }
     }
 }

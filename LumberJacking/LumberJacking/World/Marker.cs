@@ -6,6 +6,6 @@ namespace LumberJacking.World
     {
         public CellType CellType { get; init; }
         
-        public Vector3 Position { get; init; }
+        public Vector2 Position { get; init; }
     }
 }

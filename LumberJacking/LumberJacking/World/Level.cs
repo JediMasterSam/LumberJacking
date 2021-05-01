@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using LumberJacking.Geometry;
 using Microsoft.Xna.Framework;
 
 namespace LumberJacking.World
@@ -16,18 +17,11 @@ namespace LumberJacking.World
             var height = cellTypes.GetLength(1);
 
             var corners = GetCorners(cellTypes, width, height);
-            var walls = new List<Vector3[]>(corners.Count);
+            var walls = new List<Line>(corners.Count);
 
             for (var index = 0; index < corners.Count; index++)
             {
-                var (x1, y1) = corners[index];
-                var (x2, y2) = corners[index == corners.Count - 1 ? 0 : index + 1];
-
-                walls.Add(new[]
-                {
-                    new Vector3(x1, 0, y1),
-                    new Vector3(x2, 0, y2)
-                });
+                walls.Add(new Line(corners[index].ToVector2(), corners[index == corners.Count - 1 ? 0 : index + 1].ToVector2()));
             }
 
             var markers = new List<Marker>();
@@ -39,7 +33,7 @@ namespace LumberJacking.World
                     var cellType = cellTypes[x, y];
                     if (cellType != CellType.Empty && cellType != CellType.Wall)
                     {
-                        markers.Add(new Marker {CellType = cellType, Position = new Vector3(x, 0, y)});
+                        markers.Add(new Marker {CellType = cellType, Position = new Vector2(x, y)});
                     }
                 }
             }
@@ -48,8 +42,8 @@ namespace LumberJacking.World
             Markers = markers;
         }
 
-        public List<Vector3[]> Walls { get; }
-        
+        public List<Line> Walls { get; }
+
         public List<Marker> Markers { get; }
 
         public static CellType[,] GetLevel(in int level)
@@ -81,7 +75,7 @@ namespace LumberJacking.World
         public static void PrintLevel(int level)
         {
             var cellTypes = GetLevel(level);
-            
+
             var width = cellTypes.GetLength(0);
             var height = cellTypes.GetLength(1);
 
@@ -97,7 +91,7 @@ namespace LumberJacking.World
                 Debug.Write("\n");
             }
         }
-        
+
         public static void PrintPath(int level)
         {
             var cellTypes = GetLevel(level);
