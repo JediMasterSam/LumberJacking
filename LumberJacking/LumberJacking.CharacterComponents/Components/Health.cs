@@ -6,6 +6,11 @@ namespace LumberJacking.GameObject.Components
 {
     public class Health : Component
     {
+        public Health() : base(null)
+        {
+            Points = MaxPoints = 100;
+        }
+
         public Health(BaseGameObject gameObject, int max) : base(gameObject)
         {
             Points = MaxPoints = max;

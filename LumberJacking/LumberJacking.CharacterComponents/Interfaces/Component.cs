@@ -14,7 +14,7 @@ namespace LumberJacking.GameObject.Interfaces
             GameObject = gameObject;
         }
 
-        public BaseGameObject GameObject { get; }
+        public BaseGameObject GameObject { get; set; }
         public abstract void UpdateComponent(GameTime gameTime);
     }
 }

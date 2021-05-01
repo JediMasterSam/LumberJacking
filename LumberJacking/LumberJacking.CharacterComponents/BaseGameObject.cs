@@ -17,15 +17,15 @@ namespace LumberJacking.GameObject
             Components = new Dictionary<Type, Component>
             {
                 { typeof(Transform), new Transform(this) },
-                { typeof(MeshRenderer), new MeshRenderer(this) }
+                { typeof(CustomMeshRenderer), new CustomMeshRenderer(this) }
             };
 
             Transform = GetComponent<Transform>();
-            MeshRenderer = GetComponent<MeshRenderer>();
+            MeshRenderer = GetComponent<CustomMeshRenderer>();
         }
 
         public Transform Transform { get; }
-        public MeshRenderer MeshRenderer { get; }
+        public CustomMeshRenderer MeshRenderer { get; }
         public bool Drawable { get; set; }
 
         private Dictionary<Type, Component> Components { get; }
@@ -35,9 +35,12 @@ namespace LumberJacking.GameObject
             return Components.TryGetValue(typeof(T), out var component) ? (T)component : null;
         }
 
-        public T AddComponent<T>() where T : Component, new()
+        public T AddComponent<T>(BaseGameObject parent) where T : Component, new()
         {
-            var component = new T();
+            var component = new T
+            {
+                GameObject = parent
+            };
             return Components.TryAdd(typeof(T), component) ? component : null;
         }
 
@@ -55,18 +58,21 @@ namespace LumberJacking.GameObject
         {
             if (!Drawable) return;
 
-            foreach (ModelMesh mesh in MeshRenderer.Model.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-                    effect.View = Matrix.CreateLookAt(new Vector3(5, 5, 5), Vector3.Zero, Vector3.Up);
-                    effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), 1.6f, 0.1f, 10000.0f);
-                    effect.EnableDefaultLighting();
-                }
+            VertexBuffer vertexBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), 8, BufferUsage.None);
 
-                mesh.Draw();
-            }
+            vertexBuffer.SetData(MeshRenderer.Verticies);
+
+            IndexBuffer lineListIndexBuffer = new IndexBuffer(
+                GraphicsDevice,
+                IndexElementSize.SixteenBits,
+                sizeof(short) * MeshRenderer.TriangleIndices.Length,
+                BufferUsage.None);
+
+            lineListIndexBuffer.SetData(MeshRenderer.TriangleIndices);
+
+            GraphicsDevice.Indices = lineListIndexBuffer;
+            GraphicsDevice.SetVertexBuffer(vertexBuffer);
+            GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, MeshRenderer.TriangleIndices.Length / 3);
 
             base.Draw(gameTime);
         }
