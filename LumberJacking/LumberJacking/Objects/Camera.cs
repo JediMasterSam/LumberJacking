@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LumberJacking
+namespace LumberJacking.Objects
 {
     public class Camera : BaseGameObject
     {
