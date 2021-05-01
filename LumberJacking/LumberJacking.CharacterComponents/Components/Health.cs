@@ -4,17 +4,15 @@ using System;
 
 namespace LumberJacking.GameObject.Components
 {
-    public class Health : IComponent
+    public class Health : Component
     {
-        public Health(int max)
+        public Health(BaseGameObject gameObject, int max) : base(gameObject)
         {
             Points = MaxPoints = max;
         }
 
         public int Points { get; private set; }
         private int MaxPoints { get; set; }
-
-        public Type Type => typeof(Health);
 
         public void Heal(int points)
         {
@@ -31,7 +29,7 @@ namespace LumberJacking.GameObject.Components
             throw new NotImplementedException();
         }
 
-        public void UpdateComponent(GameTime gameTime)
+        public override void UpdateComponent(GameTime gameTime)
         {
             return;
         }
