@@ -1,4 +1,5 @@
 ﻿using LumberJacking.GameObject;
+using LumberJacking.Input;
 using LumberJacking.Objects;
 using LumberJacking.World;
 using Microsoft.Xna.Framework;
@@ -21,6 +22,7 @@ namespace LumberJacking
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             GameObjects = new List<BaseGameObject>();
+            Input = new InputManager();
 
             Level = new Level();
 
@@ -38,25 +40,36 @@ namespace LumberJacking
         public Camera Camera { get; private set; }
         public Level Level { get; }
         public List<BaseGameObject> GameObjects { get; }
+        public InputManager Input { get; }
+
+        //temp
+        public Texture2D WallTexture { get; set; }
 
         protected override void Initialize()
         {
-            Camera = new Camera(0.78f);
+            _graphics.PreferredBackBufferWidth = 1600;
+            _graphics.PreferredBackBufferHeight = 900;
+            _graphics.ApplyChanges();
+
             var spawn = Level.Markers.First(marker => marker.CellType == CellType.Spawn).Position;
-            Camera.Transform.Position = new Vector3(0, 0, -3);
-            Camera.Transform.Rotation = 180;
-            
-            foreach(var line in Level.Walls)
-            {
-                GameObjects.Add(new Wall(line, 10f));
-            }
+            Camera.Transform.Position = new Vector3(spawn.X, 0.5f, spawn.Y);
+            Camera.Transform.Rotation = 0;
+
+            GameObjects.Add(Camera);
 
             base.Initialize();
+
+            foreach (var line in Level.Walls)
+            {
+                GameObjects.Add(new Wall(line, WallTexture, 1f));
+            }
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            var WallTexture = Content.Load<Texture2D>("wall_texture");
 
             // TODO: use this.Content to load your game content here
         }
@@ -65,6 +78,8 @@ namespace LumberJacking
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            Input.Update();
 
             foreach(var gameObject in GameObjects)
             {

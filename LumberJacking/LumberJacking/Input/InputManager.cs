@@ -16,13 +16,9 @@ namespace LumberJacking.Input
                 {Keys.LeftShift, PlayerAction.Run},
                 {Keys.Space, PlayerAction.Attack}
             };
-
-            KeyboardState = new KeyboardState();
         }
 
         public Dictionary<Keys, PlayerAction> Bindings { get; }
-
-        private KeyboardState KeyboardState { get; }
 
         private PlayerAction PlayerAction { get; set; }
 
@@ -30,7 +26,7 @@ namespace LumberJacking.Input
         {
             var current = PlayerAction.None;
 
-            foreach (var pressedKey in KeyboardState.GetPressedKeys())
+            foreach (var pressedKey in Keyboard.GetState().GetPressedKeys())
             {
                 if (Bindings.TryGetValue(pressedKey, out var playerAction))
                 {

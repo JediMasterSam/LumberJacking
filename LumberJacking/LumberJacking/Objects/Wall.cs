@@ -13,16 +13,19 @@ namespace LumberJacking.Objects
 {
     public class Wall : BaseGameObject
     {
-        public Wall(Line line, float height = 10f) : base(LumberJackingGame.Instance)
+        public Wall(Line line, Texture2D texture, float height = 10f) : base(LumberJackingGame.Instance)
         {
             Line = line;
+            MeshRenderer.Texture = texture;
 
-            var vertices = new VertexPositionColor[]
+            var length = (line.Start - line.End).Length();
+
+            var vertices = new VertexPositionTexture[]
             {
-                new VertexPositionColor(new Vector3(line.Start.X, 0f, line.Start.Y), Color.AntiqueWhite),
-                new VertexPositionColor(new Vector3(line.Start.X, height, line.Start.Y), Color.AntiqueWhite),
-                new VertexPositionColor(new Vector3(line.End.X, height, line.End.Y), Color.AntiqueWhite),
-                new VertexPositionColor(new Vector3(line.End.X, 0f, line.End.Y), Color.AntiqueWhite),
+                new VertexPositionTexture(new Vector3(line.Start.X, 0f, line.Start.Y), new Vector2(0, 1)),
+                new VertexPositionTexture(new Vector3(line.Start.X, height, line.Start.Y), new Vector2(0, 0)),
+                new VertexPositionTexture(new Vector3(line.End.X, height, line.End.Y), new Vector2(length, 0)),
+                new VertexPositionTexture(new Vector3(line.End.X, 0f, line.End.Y), new Vector2(length, 1)),
             };
 
             var triangleIndices = new short[]

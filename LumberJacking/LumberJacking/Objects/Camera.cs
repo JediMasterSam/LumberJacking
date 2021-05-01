@@ -32,6 +32,11 @@ namespace LumberJacking.Objects
 
         public override void Update(GameTime gameTime)
         {
+            if (LumberJackingGame.Instance.Input.IsActive(Input.PlayerAction.Forward)) Transform.Position += Vector3.Backward * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (LumberJackingGame.Instance.Input.IsActive(Input.PlayerAction.Backward)) Transform.Position += Vector3.Forward * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (LumberJackingGame.Instance.Input.IsActive(Input.PlayerAction.Left)) Transform.Position += Vector3.Right * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (LumberJackingGame.Instance.Input.IsActive(Input.PlayerAction.Right)) Transform.Position += Vector3.Left * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             View = Matrix.CreateLookAt(Transform.Position, Transform.Position + GetLookAtVector(), Vector3.Up);
             Projection = Matrix.CreatePerspectiveFieldOfView(FieldOfView, AspectRatio, NearClipPlane, FarClipPlane);
 
