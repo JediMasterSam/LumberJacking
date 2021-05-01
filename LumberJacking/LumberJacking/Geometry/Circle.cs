@@ -19,6 +19,11 @@ namespace LumberJacking.Geometry
             return (Center - point).LengthSquared() <= RadiusSquared;
         }
 
+        public bool Intersects(Circle other)
+        {
+            return (Center - other.Center).LengthSquared() <= RadiusSquared + other.RadiusSquared;
+        }
+
         public bool Intersects(Line line)
         {
             if (Contains(line.Start) || Contains(line.End)) return true;
