@@ -13,10 +13,10 @@ namespace LumberJacking.GameObject.Components
     {
         public CustomMeshRenderer(BaseGameObject gameObject, GraphicsDevice device) : base(gameObject)
         {
-            Effect = new BasicEffect(device);
+            Effect = new AlphaTestEffect(device);
         }
 
-        public BasicEffect Effect { get; set; }
+        public AlphaTestEffect Effect { get; set; }
         public Texture2D Texture { get; set; }
         public VertexPositionTexture[] Verticies { get; set; }
         public short[] TriangleIndices { get; set; }

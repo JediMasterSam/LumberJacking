@@ -17,6 +17,7 @@ namespace LumberJacking.Objects
         {
             Line = line;
             MeshRenderer.Texture = texture;
+            MeshRenderer.Effect.AlphaFunction = CompareFunction.Always;
 
             var length = (line.Start - line.End).Length();
 
