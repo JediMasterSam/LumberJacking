@@ -45,6 +45,7 @@ namespace LumberJacking
         //temp
         public Texture2D WallTexture { get; set; }
         public Texture2D AxeTexture { get; set; }
+        public Texture2D FloorTexture { get; set; }
 
         protected override void Initialize()
         {
@@ -66,6 +67,8 @@ namespace LumberJacking
             {
                 GameObjects.Add(new Wall(line, WallTexture, 1f));
             }
+
+            GameObjects.Add(new Floor(1000f, FloorTexture));
         }
 
         protected override void LoadContent()
@@ -74,6 +77,7 @@ namespace LumberJacking
 
             WallTexture = Content.Load<Texture2D>("wall_texture");
             AxeTexture = Content.Load<Texture2D>("BFA");
+            FloorTexture = Content.Load<Texture2D>("floor_texture");
 
             var tree1 = Content.Load<Texture2D>("tree_1");
 
