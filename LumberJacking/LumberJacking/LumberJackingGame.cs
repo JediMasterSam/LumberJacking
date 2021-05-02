@@ -44,6 +44,7 @@ namespace LumberJacking
 
         //temp
         public Texture2D WallTexture { get; set; }
+        public Texture2D AxeTexture { get; set; }
 
         protected override void Initialize()
         {
@@ -53,15 +54,13 @@ namespace LumberJacking
             _graphics.IsFullScreen = true;
             _graphics.ApplyChanges();
 
-            Camera = new Camera(0.4f);
+            base.Initialize();
 
             var spawn = Level.Markers.First(marker => marker.CellType == CellType.Spawn).Position;
-            Camera.Transform.Position = new Vector3(spawn.X, 0.5f, spawn.Y);
+            Camera = new Camera(0.4f, new Vector3(spawn.X, 0.5f, spawn.Y), AxeTexture);
             Camera.Transform.Rotation = 180;
 
             GameObjects.Add(Camera);
-
-            base.Initialize();
 
             foreach (var line in Level.Walls)
             {
@@ -74,6 +73,7 @@ namespace LumberJacking
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             WallTexture = Content.Load<Texture2D>("wall_texture");
+            AxeTexture = Content.Load<Texture2D>("BFA");
 
             var tree1 = Content.Load<Texture2D>("tree_1");
 
