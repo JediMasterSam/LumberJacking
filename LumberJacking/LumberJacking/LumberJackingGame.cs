@@ -47,6 +47,7 @@ namespace LumberJacking
 
         protected override void Initialize()
         {
+            IsMouseVisible = false;
             _graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
             _graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
             _graphics.IsFullScreen = true;
