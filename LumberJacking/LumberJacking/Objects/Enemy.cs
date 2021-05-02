@@ -18,6 +18,7 @@ namespace LumberJacking.Objects
             var (x, y) = point;
             Transform.Position = new Vector3(x, 0, y);
             MeshRenderer.Texture = texture2D;
+            MeshRenderer.Effect = new AlphaTestEffect(GraphicsDevice);
 
             var offset = new Vector2(.5f, 0);
             var start = point - offset;
