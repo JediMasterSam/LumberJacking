@@ -9,6 +9,10 @@ namespace LumberJacking.Objects
 {
     public class Enemy : BaseGameObject
     {
+        private const float DegToRad = 180f / MathF.PI * 2;
+        private const float RadToDeg = MathF.PI * 2 / 180;
+
+
         public Enemy(Vector2 point, Texture2D texture2D, float height) : base(LumberJackingGame.Instance)
         {
             var (x, y) = point;
@@ -42,11 +46,10 @@ namespace LumberJacking.Objects
 
             MeshRenderer.Verticies = vertices;
             MeshRenderer.TriangleIndices = triangleIndices;
-            BlendState = BlendState.AlphaBlend;
 
             Circle = new Circle(point, 1);
         }
-        
+
         private Circle Circle { get; set; }
 
         public override void Update(GameTime gameTime)
@@ -54,6 +57,33 @@ namespace LumberJacking.Objects
             if (Circle.Intersects(LumberJackingGame.Instance.Camera.GetComponent<BasicPhysics>().Circle))
             {
                 Delete = true;
+            }
+
+            // var player = LumberJackingGame.Instance.Camera.Transform.Position;
+            // var angle = Transform.Rotation;
+            // var current = new Vector3(MathF.Cos(angle * DegToRad), 0, MathF.Sin(angle * DegToRad));
+            // var lookAt = player - Transform.Position;
+            //
+            // current.Normalize();
+            // lookAt.Normalize();
+            //
+            // angle = Vector3.Dot(current, lookAt);
+            //
+            // if(Math.Abs(angle - Transform.Rotation * DegToRad) < .1f)return;
+            
+            var cos = MathF.Cos(0.0174533f);
+            var sin = MathF.Sin(0.0174533f);
+
+            // Transform.Rotation = (angle * RadToDeg);
+
+            for (var index = 0; index < MeshRenderer.Verticies.Length; index++)
+            {
+                var temp = MeshRenderer.Verticies[index];
+                var p = temp.Position;
+                var (x, _, z) = p - Transform.Position;
+                var update = new Vector3(x * cos - z * sin, p.Y, z * cos + x * sin) + Transform.Position;
+
+                MeshRenderer.Verticies[index] = new VertexPositionTexture(update, temp.TextureCoordinate);
             }
 
             base.Update(gameTime);
