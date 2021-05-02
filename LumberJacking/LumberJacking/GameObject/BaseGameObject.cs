@@ -25,9 +25,12 @@ namespace LumberJacking.GameObject
             Drawable = true;
         }
 
+        public BlendState BlendState { get; set; } = BlendState.Opaque;
         public Transform Transform { get; }
         public CustomMeshRenderer MeshRenderer { get; }
         public bool Drawable { get; set; }
+        
+        public bool Delete { get; set; }
 
         private Dictionary<Type, Component> Components { get; }
 
@@ -64,7 +67,7 @@ namespace LumberJacking.GameObject
             var basicEffect = MeshRenderer.Effect;
 
             // These three lines are required if you use SpriteBatch, to reset the states that it sets
-            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.BlendState = BlendState;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 

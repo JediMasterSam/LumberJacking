@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LumberJacking.Input;
 
 namespace LumberJacking.Objects
 {
@@ -40,14 +41,16 @@ namespace LumberJacking.Objects
         {
             var gameInstance = LumberJackingGame.Instance;
 
-            if (gameInstance.Input.IsActive(Input.PlayerAction.RotateLeft)) Transform.Rotation -= (float)gameTime.ElapsedGameTime.TotalSeconds * 0.025f;
-            if (gameInstance.Input.IsActive(Input.PlayerAction.RotateRight)) Transform.Rotation += (float)gameTime.ElapsedGameTime.TotalSeconds * 0.025f;
+            if (gameInstance.Input.IsActive(Input.PlayerAction.RotateLeft)) Transform.Rotation -= (float)gameTime.ElapsedGameTime.TotalSeconds * 0.005f;
+            if (gameInstance.Input.IsActive(Input.PlayerAction.RotateRight)) Transform.Rotation += (float)gameTime.ElapsedGameTime.TotalSeconds * 0.005f;
 
             var localForward = GetLookAtVector();
             localForward.Normalize();
 
-            var localRight = new Vector3(localForward.Z, 0, localForward.X);
-            var localLeft = new Vector3(-localForward.Z, 0, -localForward.X);
+            localForward *= gameInstance.Input.IsActive(PlayerAction.Run) ? 10 : 5;
+
+            var localRight = new Vector3(localForward.Z, 0, -localForward.X);
+            var localLeft = new Vector3(-localForward.Z, 0, localForward.X);
 
             if (gameInstance.Input.IsActive(Input.PlayerAction.Forward)) Transform.Position += localForward * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (gameInstance.Input.IsActive(Input.PlayerAction.Backward)) Transform.Position += -localForward * (float)gameTime.ElapsedGameTime.TotalSeconds;

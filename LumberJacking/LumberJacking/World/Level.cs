@@ -64,6 +64,7 @@ namespace LumberJacking.World
                         ' ' => CellType.Empty,
                         '|' or '-' => CellType.Wall,
                         'S' => CellType.Spawn,
+                        'X' => CellType.Enemy,
                         _ => throw new Exception($"Unknown character: {line[x]}")
                     };
                 }

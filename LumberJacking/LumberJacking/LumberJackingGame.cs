@@ -26,7 +26,7 @@ namespace LumberJacking
 
             Level = new Level();
 
-            if(Instance == null)
+            if (Instance == null)
             {
                 Instance = this;
             }
@@ -47,15 +47,16 @@ namespace LumberJacking
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = 1600;
-            _graphics.PreferredBackBufferHeight = 900;
+            _graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            _graphics.IsFullScreen = true;
             _graphics.ApplyChanges();
 
             Camera = new Camera(0.4f);
 
             var spawn = Level.Markers.First(marker => marker.CellType == CellType.Spawn).Position;
             Camera.Transform.Position = new Vector3(spawn.X, 0.5f, spawn.Y);
-            Camera.Transform.Rotation = 0;
+            Camera.Transform.Rotation = 180;
 
             GameObjects.Add(Camera);
 
@@ -73,6 +74,15 @@ namespace LumberJacking
 
             WallTexture = Content.Load<Texture2D>("wall_texture");
 
+            var tree1 = Content.Load<Texture2D>("tree_1");
+
+            foreach (var levelMarker in Level.Markers)
+            {
+                if (levelMarker.CellType == CellType.Enemy)
+                {
+                    GameObjects.Add(new Enemy(levelMarker.Position, tree1, 1));
+                }
+            }
             // TODO: use this.Content to load your game content here
         }
 
@@ -83,9 +93,14 @@ namespace LumberJacking
 
             Input.Update();
 
-            foreach(var gameObject in GameObjects)
+            for (var index = 0; index < GameObjects.Count; index++)
             {
+                var gameObject = GameObjects[index];
                 gameObject.Update(gameTime);
+                if (gameObject.Delete)
+                {
+                    GameObjects.Remove(gameObject);
+                }
             }
 
             base.Update(gameTime);

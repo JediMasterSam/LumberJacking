@@ -4,6 +4,7 @@
     {
         Empty,
         Wall,
-        Spawn
+        Spawn,
+        Enemy
     }
 }
